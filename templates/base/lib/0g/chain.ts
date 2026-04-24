@@ -97,12 +97,12 @@ export async function getChainHealth(): Promise<{
 /**
  * Anchor a data hash on 0G Chain.
  *
- * This is the simplest form of on-chain anchoring — store a hash
- * that proves some data existed at a specific time. For more complex
- * anchoring (with contracts), see the full-stack template.
+ * Sends a 0-value transaction with the hash as calldata.
+ * This is the simplest form of on-chain anchoring — proves
+ * some data existed at a specific block.
  *
- * @param dataHash - SHA-256 hash of the data to anchor
- * @returns Transaction hash
+ * @param dataHash - SHA-256 hash of the data to anchor (0x-prefixed)
+ * @returns Transaction hash, chain ID, and block number
  */
 export async function anchorHash(dataHash: `0x${string}`): Promise<{
   txHash: `0x${string}`;
@@ -113,11 +113,14 @@ export async function anchorHash(dataHash: `0x${string}`): Promise<{
   const publicClient = getPublicClient();
   const zgEnv = loadZeroGEnv();
 
-  // Simple approach: send a 0-value tx with the hash as calldata
+  const account = privateKeyToAccount(zgEnv.chainPrivateKey as `0x${string}`);
+
   const txHash = await wallet.sendTransaction({
-    to: wallet.account!.address,
-    value: 0n,
+    account,
+    to: account.address,
+    value: BigInt(0),
     data: dataHash,
+    chain: get0GChain(),
   });
 
   const receipt = await publicClient.waitForTransactionReceipt({ hash: txHash });

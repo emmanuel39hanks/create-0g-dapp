@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function ChainPage() {
   const [data, setData] = useState('Hello from 0G Chain!');
-  const [result, setResult] = useState<Record<string, unknown> | null>(null);
+  const [result, setResult] = useState<{ dataHash: string; txHash: string; chainId: number; blockNumber: number; explorerUrl: string } | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -54,12 +54,12 @@ export default function ChainPage() {
         <div className="bg-green-500/5 border border-green-500/20 rounded-2xl p-5">
           <h3 className="text-green-400 text-xs font-bold mb-3">Anchored on 0G Chain</h3>
           <div className="space-y-2 text-xs font-mono">
-            <div><span className="text-neutral-500">Data Hash:</span> <span className="text-green-300">{result.dataHash as string}</span></div>
-            <div><span className="text-neutral-500">TX Hash:</span> <span className="text-green-300">{result.txHash as string}</span></div>
-            <div><span className="text-neutral-500">Chain ID:</span> <span className="text-green-300">{String(result.chainId)}</span></div>
-            <div><span className="text-neutral-500">Block:</span> <span className="text-green-300">{String(result.blockNumber)}</span></div>
+            <div><span className="text-neutral-500">Data Hash:</span> <span className="text-green-300">{result.dataHash}</span></div>
+            <div><span className="text-neutral-500">TX Hash:</span> <span className="text-green-300">{result.txHash}</span></div>
+            <div><span className="text-neutral-500">Chain ID:</span> <span className="text-green-300">{result.chainId}</span></div>
+            <div><span className="text-neutral-500">Block:</span> <span className="text-green-300">{result.blockNumber}</span></div>
             {result.explorerUrl && (
-              <a href={result.explorerUrl as string} target="_blank" rel="noopener" className="text-orange-400 hover:underline block mt-2">
+              <a href={result.explorerUrl} target="_blank" rel="noopener" className="text-orange-400 hover:underline block mt-2">
                 View on ChainScan &rarr;
               </a>
             )}

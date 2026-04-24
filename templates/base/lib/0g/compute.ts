@@ -123,9 +123,12 @@ export async function listServices(limit = 20): Promise<
   const broker = await createZGComputeNetworkReadOnlyBroker(zgEnv.chainRpcUrl, zgEnv.chainId);
   const services = await broker.inference.listServiceWithDetail(0, limit, false);
 
-  return services.map((svc: Record<string, unknown>) => ({
-    provider: String(svc.provider || svc.providerAddress || ''),
-    model: String(svc.model || svc.serviceName || svc.name || ''),
-    endpoint: String(svc.endpoint || svc.url || ''),
-  }));
+  return services.map((svc) => {
+    const s = svc as unknown as Record<string, unknown>;
+    return {
+      provider: String(s.provider || s.providerAddress || ''),
+      model: String(s.model || s.serviceName || s.name || ''),
+      endpoint: String(s.endpoint || s.url || ''),
+    };
+  });
 }

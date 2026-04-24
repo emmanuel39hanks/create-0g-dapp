@@ -59,14 +59,33 @@ export async function publishJson(payload: unknown): Promise<{
   await writeFile(filePath, content);
 
   const zgFile = await ZgFile.fromFilePath(filePath);
-  const [tx, rootHash] = await indexer.upload(zgFile, signer);
+
+  // SDK upload: (file, rpcUrl, signer)
+  const uploadResult = await indexer.upload(zgFile, zgEnv.chainRpcUrl, signer) as unknown;
 
   await zgFile.close();
+
+  // Handle different SDK response formats
+  let txHash = '';
+  let rootHash = '';
+
+  if (Array.isArray(uploadResult)) {
+    const err = uploadResult[0] as Error | null;
+    const hash = uploadResult[1] as string;
+    if (err) throw err;
+    rootHash = hash;
+  } else if (typeof uploadResult === 'object' && uploadResult !== null) {
+    const r = uploadResult as Record<string, unknown>;
+    txHash = String(r.txHash || '');
+    rootHash = String(r.rootHash || '');
+  } else {
+    rootHash = String(uploadResult);
+  }
 
   return {
     rootHash,
     storageUri: `0g://log/${rootHash}`,
-    txHash: tx,
+    txHash,
   };
 }
 

@@ -16,6 +16,7 @@ const PAGES = [
   { name: 'Storage', href: '/storage', desc: 'Upload & download data on 0G Storage' },
   { name: 'Compute', href: '/compute', desc: 'AI inference via Qwen on 0G Compute' },
   { name: 'Chain', href: '/chain', desc: 'Anchor data hashes on 0G Chain' },
+  { name: 'INFT', href: '/inft', desc: 'Mint intelligent NFTs with metadata on 0G' },
 ];
 
 export default function Home() {

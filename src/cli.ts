@@ -30,7 +30,7 @@ export interface CliOptions {
 
 export async function run() {
   const program = new Command()
-    .name('create-0g-app')
+    .name('create-0g-dapp')
     .version(getVersion())
     .description('Scaffold a Next.js app with the 0G decentralized AI network')
     .argument('[project-name]', 'Name of the project directory')
@@ -45,7 +45,7 @@ export async function run() {
   const flags = program.opts();
 
   console.log('');
-  p.intro(chalk.bgHex('#FF5C16').black(' create-0g-app '));
+  p.intro(chalk.bgHex('#FF5C16').black(' create-0g-dapp '));
 
   const projectName = args[0] || await p.text({
     message: 'What is your project named?',

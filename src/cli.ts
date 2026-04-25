@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import { TEMPLATES, NETWORKS, type Template, type Network, type PackageManager } from './constants.js';
 import { scaffold } from './scaffold.js';
 import { installDependencies, initGit, detectPackageManager } from './install.js';
+import { SKILLS, listSkills } from './skills.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -26,6 +27,7 @@ export interface CliOptions {
   packageManager: PackageManager;
   git: boolean;
   install: boolean;
+  skills: string[];
 }
 
 export async function run() {
@@ -38,7 +40,9 @@ export async function run() {
     .option('-n, --network <network>', 'Network: mainnet | testnet')
     .option('--pm <manager>', 'Package manager: npm | pnpm | yarn | bun')
     .option('--no-git', 'Skip git init')
-    .option('--no-install', 'Skip dependency installation');
+    .option('--no-install', 'Skip dependency installation')
+    .option('--skills <skills>', 'Comma-separated skills to add (e.g., prediction-market,agent-memory)')
+    .option('--no-skills', 'Skip skill selection');
 
   program.parse();
   const args = program.args;
@@ -106,6 +110,21 @@ export async function run() {
 
   if (p.isCancel(shouldGit)) { p.cancel('Cancelled.'); process.exit(0); }
 
+  // Skill selection
+  let selectedSkills: string[] = [];
+  if (flags.skills === false) {
+    selectedSkills = [];
+  } else if (typeof flags.skills === 'string') {
+    selectedSkills = flags.skills.split(',').map((s: string) => s.trim()).filter(Boolean);
+  } else {
+    selectedSkills = await p.multiselect({
+      message: 'Add skills? (space to select, enter to continue)',
+      options: listSkills(),
+      required: false,
+    }) as string[];
+    if (p.isCancel(selectedSkills)) { p.cancel('Cancelled.'); process.exit(0); }
+  }
+
   const shouldInstall = flags.install !== false ? await p.confirm({
     message: 'Install dependencies?',
     initialValue: true,
@@ -122,6 +141,7 @@ export async function run() {
       `${chalk.bold('Template:')}   ${TEMPLATES[template].label}`,
       `${chalk.bold('Network:')}    0G ${network} (Chain ID ${networkConfig.chainId})`,
       `${chalk.bold('RPC:')}        ${networkConfig.chainRpcUrl}`,
+      `${chalk.bold('Skills:')}     ${selectedSkills.length > 0 ? selectedSkills.join(', ') : 'none'}`,
       `${chalk.bold('PM:')}         ${packageManager}`,
       `${chalk.bold('Directory:')}  ${projectDir}`,
     ].join('\n'),
@@ -135,6 +155,7 @@ export async function run() {
     packageManager,
     git: shouldGit,
     install: shouldInstall,
+    skills: selectedSkills,
   };
 
   // Scaffold

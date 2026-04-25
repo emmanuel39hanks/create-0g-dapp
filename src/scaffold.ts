@@ -8,6 +8,7 @@ import {
   TEMPLATE_DEPS,
   type Template,
 } from './constants.js';
+import { SKILLS } from './skills.js';
 import type { CliOptions } from './cli.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -19,6 +20,13 @@ function processTemplate(content: string, vars: Record<string, string>): string 
 
 function buildPackageJson(options: CliOptions): string {
   const templateDeps = TEMPLATE_DEPS[options.template];
+
+  // Merge skill dependencies
+  const skillDeps: Record<string, string> = {};
+  for (const skillName of (options.skills || [])) {
+    const skill = SKILLS[skillName];
+    if (skill) Object.assign(skillDeps, skill.dependencies);
+  }
 
   const pkg = {
     name: options.projectName,
@@ -35,6 +43,7 @@ function buildPackageJson(options: CliOptions): string {
     dependencies: {
       ...BASE_DEPS,
       ...templateDeps.deps,
+      ...skillDeps,
     },
     devDependencies: {
       ...BASE_DEV_DEPS,
@@ -166,6 +175,41 @@ export async function scaffold(options: CliOptions, projectDir: string): Promise
     '*.tsbuildinfo',
     'next-env.d.ts',
   ].join('\n'));
+
+  // 8. Copy selected skills
+  const SKILLS_SOURCE = resolve(__dirname, '..', 'skills');
+  for (const skillName of (options.skills || [])) {
+    const skill = SKILLS[skillName];
+    if (!skill) continue;
+
+    for (const file of skill.files) {
+      const sourcePath = join(SKILLS_SOURCE, skillName, file.source);
+      const targetPath = join(projectDir, file.target);
+      if (await fse.pathExists(sourcePath)) {
+        await fse.ensureDir(dirname(targetPath));
+        await fse.copy(sourcePath, targetPath);
+      }
+    }
+
+    // Append skill env vars
+    if (skill.envVars) {
+      const envPath = join(projectDir, '.env.example');
+      const envContent = await fse.readFile(envPath, 'utf-8');
+      const newVars = Object.entries(skill.envVars)
+        .filter(([key]) => !envContent.includes(key))
+        .map(([key, val]) => `${key}=${val}`)
+        .join('\n');
+      if (newVars) {
+        await fse.appendFile(envPath, `\n# ─── Skill: ${skill.name} ───\n${newVars}\n`);
+      }
+    }
+  }
+
+  // 9. Copy bundled 0G Agent Skills (SKILL.md files for Claude Code / Cursor / Copilot)
+  const agentSkillsDir = join(TEMPLATES_DIR, 'base', 'skills', '0g-agent-skills');
+  if (await fse.pathExists(agentSkillsDir)) {
+    await fse.copy(agentSkillsDir, join(projectDir, 'skills', '0g-agent-skills'), { overwrite: true });
+  }
 }
 
 async function listFiles(dir: string): Promise<string[]> {

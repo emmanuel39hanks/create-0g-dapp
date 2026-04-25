@@ -11,15 +11,15 @@ export function detectPackageManager(): PackageManager {
 
 export async function installDependencies(projectDir: string, pm: PackageManager): Promise<void> {
   const commands: Record<PackageManager, string> = {
-    npm: 'npm install',
-    pnpm: 'pnpm install',
-    yarn: 'yarn',
+    npm: 'npm install --loglevel=error',
+    pnpm: 'pnpm install --reporter=silent',
+    yarn: 'yarn --silent',
     bun: 'bun install',
   };
 
   execSync(commands[pm], {
     cwd: projectDir,
-    stdio: 'pipe',
+    stdio: 'inherit',
     env: { ...process.env, ADBLOCK: '1', DISABLE_OPENCOLLECTIVE: '1' },
   });
 }
@@ -28,7 +28,7 @@ export async function initGit(projectDir: string): Promise<void> {
   try {
     execSync('git init', { cwd: projectDir, stdio: 'pipe' });
     execSync('git add -A', { cwd: projectDir, stdio: 'pipe' });
-    execSync('git commit -m "Initial commit from create-0g-app"', {
+    execSync('git commit -m "Initial commit from create-0g-dapp"', {
       cwd: projectDir,
       stdio: 'pipe',
     });

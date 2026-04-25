@@ -145,9 +145,9 @@ export async function run() {
 
   // Install dependencies
   if (shouldInstall) {
-    s.start(`Installing dependencies with ${packageManager}...`);
+    p.log.step(`Installing dependencies with ${packageManager}...`);
     await installDependencies(projectDir, packageManager);
-    s.stop('Dependencies installed.');
+    p.log.success('Dependencies installed.');
   }
 
   // Git init

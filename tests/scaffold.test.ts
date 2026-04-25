@@ -13,6 +13,7 @@ function makeOptions(overrides: Partial<CliOptions> = {}): CliOptions {
     packageManager: 'npm',
     git: false,
     install: false,
+    skills: [],
     ...overrides,
   };
 }

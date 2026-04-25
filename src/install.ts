@@ -11,9 +11,9 @@ export function detectPackageManager(): PackageManager {
 
 export async function installDependencies(projectDir: string, pm: PackageManager): Promise<void> {
   const commands: Record<PackageManager, string> = {
-    npm: 'npm install --loglevel=error',
-    pnpm: 'pnpm install --reporter=silent',
-    yarn: 'yarn --silent',
+    npm: 'npm install --legacy-peer-deps --loglevel=error',
+    pnpm: 'pnpm install',
+    yarn: 'yarn',
     bun: 'bun install',
   };
 

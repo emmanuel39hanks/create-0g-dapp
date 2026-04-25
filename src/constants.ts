@@ -59,10 +59,10 @@ export const NETWORKS: Record<Network, NetworkConfig> = {
 };
 
 export const SDK_VERSIONS = {
-  '@0gfoundation/0g-ts-sdk': '^1.2.1',
-  '@0glabs/0g-serving-broker': '^0.7.4',
+  '@0gfoundation/0g-ts-sdk': '^1.2.6',
+  '@0glabs/0g-serving-broker': '^0.7.5',
   viem: '^2.47.6',
-  ethers: '^6.16.0',
+  ethers: '6.13.1',
   openai: '^4.86.0',
 } as const;
 

@@ -167,8 +167,12 @@ export async function run() {
   // Install dependencies
   if (shouldInstall) {
     p.log.step(`Installing dependencies with ${packageManager}...`);
-    await installDependencies(projectDir, packageManager);
-    p.log.success('Dependencies installed.');
+    try {
+      await installDependencies(projectDir, packageManager);
+      p.log.success('Dependencies installed.');
+    } catch {
+      p.log.warn('Install failed. Run manually: cd ' + projectName + ' && npm install --legacy-peer-deps');
+    }
   }
 
   // Git init

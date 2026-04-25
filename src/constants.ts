@@ -61,28 +61,28 @@ export const NETWORKS: Record<Network, NetworkConfig> = {
 export const SDK_VERSIONS = {
   '@0gfoundation/0g-ts-sdk': '^1.2.6',
   '@0glabs/0g-serving-broker': '^0.7.5',
-  viem: '^2.47.6',
+  viem: '^2.48.4',
   ethers: '6.13.1',
-  openai: '^4.86.0',
+  openai: '^6.34.0',
 } as const;
 
 export const BASE_DEPS: Record<string, string> = {
-  next: '^15.3.1',
-  react: '^19.1.0',
-  'react-dom': '^19.1.0',
-  wagmi: '^2.15.0',
-  '@tanstack/react-query': '^5.75.0',
+  next: '^15.5.15',
+  react: '^19.2.5',
+  'react-dom': '^19.2.5',
+  wagmi: '^2.19.5',
+  '@tanstack/react-query': '^5.100.1',
 };
 
 export const BASE_DEV_DEPS: Record<string, string> = {
-  typescript: '^5.8.3',
+  typescript: '^5.9.3',
   '@types/node': '^22.15.3',
-  '@types/react': '^19.1.2',
-  '@types/react-dom': '^19.1.2',
-  tailwindcss: '^4.1.4',
-  '@tailwindcss/postcss': '^4.1.4',
+  '@types/react': '^19.2.14',
+  '@types/react-dom': '^19.2.3',
+  tailwindcss: '^4.2.4',
+  '@tailwindcss/postcss': '^4.2.4',
   postcss: '^8.5.3',
-  vitest: '^3.1.2',
+  vitest: '^3.2.4',
 };
 
 export const TEMPLATE_DEPS: Record<Template, { deps: Record<string, string>; devDeps?: Record<string, string> }> = {

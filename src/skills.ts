@@ -26,7 +26,7 @@ export const SKILLS: Record<string, Skill> = {
     description: 'AI-powered prediction markets — 0G Compute resolves outcomes, Storage stores proofs',
     track: 'Track 3: Agentic Economy',
     category: 'economy',
-    dependencies: { zod: '^3.24.0' },
+    dependencies: { zod: '^4.3.6' },
     envVars: { PREDICTION_ORACLE_MODEL: 'qwen3.6-plus' },
     files: [
       { source: 'components/MarketCard.tsx', target: 'app/components/skills/MarketCard.tsx' },

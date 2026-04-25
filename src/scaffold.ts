@@ -39,6 +39,7 @@ function buildPackageJson(options: CliOptions): string {
       lint: 'tsc --noEmit',
       test: 'vitest run',
       'test:watch': 'vitest',
+      postinstall: 'node scripts/patch-0g-sdk.js',
     },
     dependencies: {
       ...BASE_DEPS,
@@ -118,6 +119,9 @@ ZERO_G_DA_ENABLED=false
 
 # ─── App ─────────────────────────────────────────────────────
 NEXT_PUBLIC_0G_NETWORK=${options.network}
+# Wallet connect (used by wagmi for browser wallet integration)
+NEXT_PUBLIC_0G_CHAIN_ID=${net.chainId}
+NEXT_PUBLIC_0G_RPC_URL=${net.chainRpcUrl}
 `;
 }
 

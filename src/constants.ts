@@ -70,6 +70,8 @@ export const BASE_DEPS: Record<string, string> = {
   next: '^15.3.1',
   react: '^19.1.0',
   'react-dom': '^19.1.0',
+  wagmi: '^2.15.0',
+  '@tanstack/react-query': '^5.75.0',
 };
 
 export const BASE_DEV_DEPS: Record<string, string> = {

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { StatusCard } from '@/components/StatusCard';
 import { NetworkBadge } from '@/components/NetworkBadge';
+import { WalletConnect } from '@/components/WalletConnect';
 
 interface HealthData {
   status: string;
@@ -37,7 +38,10 @@ export default function Home() {
             <p className="text-[#999] text-xs">All components wired up and ready</p>
           </div>
         </div>
-        {health && <NetworkBadge network={health.network} status={health.status} />}
+        <div className="flex items-center gap-3">
+          <WalletConnect />
+          {health && <NetworkBadge network={health.network} status={health.status} />}
+        </div>
       </header>
 
       <section className="mb-10">

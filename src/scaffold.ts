@@ -33,7 +33,7 @@ function buildPackageJson(options: CliOptions): string {
     version: '0.1.0',
     private: true,
     scripts: {
-      dev: 'next dev --turbopack',
+      dev: 'next dev',
       build: 'next build',
       start: 'next start',
       lint: 'tsc --noEmit',

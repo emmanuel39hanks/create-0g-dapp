@@ -67,7 +67,7 @@ export const SDK_VERSIONS = {
 } as const;
 
 export const BASE_DEPS: Record<string, string> = {
-  next: '^15.5.15',
+  next: '^16.2.4',
   react: '^19.2.5',
   'react-dom': '^19.2.5',
   wagmi: '^2.19.5',

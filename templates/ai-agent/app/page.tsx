@@ -92,11 +92,11 @@ export default function AgentPage() {
       <div className="p-6 pb-2 flex items-center justify-between">
         <div>
           <h1 className="text-xl font-black">
-            <span className="text-orange-500">0G</span> Agent
+            <span className="text-[#9200E1]">0G</span> Agent
           </h1>
-          <p className="text-neutral-500 text-xs">AI agent with Storage, Chain, and Compute tools</p>
+          <p className="text-[#999] text-xs">AI agent with Storage, Chain, and Compute tools</p>
         </div>
-        <div className="text-[10px] font-mono text-neutral-600 bg-neutral-900 px-2.5 py-1 rounded-full">
+        <div className="text-[10px] font-mono text-[#999] bg-white px-2.5 py-1 rounded-full">
           Qwen on 0G Compute
         </div>
       </div>
@@ -105,8 +105,8 @@ export default function AgentPage() {
       <div className="flex-1 overflow-y-auto px-6 space-y-4 py-4">
         {messages.length === 0 && (
           <div className="text-center py-16 space-y-4">
-            <div className="text-4xl font-black text-orange-500">0G</div>
-            <p className="text-neutral-500 text-sm max-w-md mx-auto">
+            <div className="text-4xl font-black text-[#9200E1]">0G</div>
+            <p className="text-[#999] text-sm max-w-md mx-auto">
               I'm an AI agent running on 0G Compute. I can store data on 0G Storage, anchor proofs on 0G Chain, and list available compute services.
             </p>
             <div className="flex gap-2 justify-center flex-wrap">
@@ -114,7 +114,7 @@ export default function AgentPage() {
                 <button
                   key={q}
                   onClick={() => { setInput(q); }}
-                  className="text-xs bg-neutral-800 hover:bg-neutral-700 px-3 py-1.5 rounded-full text-neutral-300 transition-colors"
+                  className="text-xs bg-[#F5F5F5] hover:bg-[#E5E5E5] px-3 py-1.5 rounded-full text-[#333] transition-colors"
                 >
                   {q}
                 </button>
@@ -130,7 +130,7 @@ export default function AgentPage() {
               {msg.tools && msg.tools.length > 0 && (
                 <div className="flex gap-1 flex-wrap">
                   {msg.tools.map((t, j) => (
-                    <span key={j} className="text-[10px] font-mono bg-orange-500/10 text-orange-400 px-2 py-0.5 rounded-full">
+                    <span key={j} className="text-[10px] font-mono bg-[#9200E1]/10 text-[#9200E1] px-2 py-0.5 rounded-full">
                       {t.name}
                     </span>
                   ))}
@@ -138,8 +138,8 @@ export default function AgentPage() {
               )}
               <div className={`rounded-2xl px-4 py-3 text-sm whitespace-pre-wrap ${
                 msg.role === 'user'
-                  ? 'bg-orange-500 text-white'
-                  : 'bg-neutral-800/80 text-neutral-200'
+                  ? 'bg-[#9200E1] text-white'
+                  : 'bg-[#F5F5F5]/80 text-[#333]'
               }`}>
                 {msg.content}
               </div>
@@ -149,7 +149,7 @@ export default function AgentPage() {
 
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-neutral-800/80 rounded-2xl px-4 py-3 text-sm text-neutral-400 animate-pulse">
+            <div className="bg-[#F5F5F5]/80 rounded-2xl px-4 py-3 text-sm text-[#666] animate-pulse">
               Thinking...
             </div>
           </div>
@@ -161,7 +161,7 @@ export default function AgentPage() {
       <div className="p-6 pt-2">
         <div className="flex gap-2">
           <input
-            className="flex-1 bg-neutral-900 border border-neutral-700 rounded-full px-5 py-3 text-sm text-neutral-200 focus:border-orange-500 outline-none"
+            className="flex-1 bg-white border border-[#E5E5E5] rounded-full px-5 py-3 text-sm text-[#333] focus:border-[#9200E1] outline-none"
             placeholder="Ask about 0G, store data, anchor proofs..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -170,12 +170,12 @@ export default function AgentPage() {
           <button
             onClick={send}
             disabled={loading || !input.trim()}
-            className="px-5 py-3 bg-orange-500 text-white text-sm font-bold rounded-full hover:bg-orange-600 disabled:opacity-50 transition-colors"
+            className="px-5 py-3 bg-[#9200E1] text-white text-sm font-bold rounded-full hover:bg-[#7A00BD] disabled:opacity-50 transition-colors"
           >
             Send
           </button>
         </div>
-        <p className="text-[10px] text-neutral-600 text-center mt-1.5">
+        <p className="text-[10px] text-[#999] text-center mt-1.5">
           Powered by Qwen on 0G Compute — decentralized AI inference
         </p>
       </div>

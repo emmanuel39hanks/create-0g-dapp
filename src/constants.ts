@@ -104,14 +104,19 @@ export const TEMPLATE_DEPS: Record<Template, { deps: Record<string, string>; dev
   'storage-dapp': {
     deps: {
       '@0gfoundation/0g-ts-sdk': SDK_VERSIONS['@0gfoundation/0g-ts-sdk'],
+      '@0glabs/0g-serving-broker': SDK_VERSIONS['@0glabs/0g-serving-broker'],
       viem: SDK_VERSIONS.viem,
       ethers: SDK_VERSIONS.ethers,
+      openai: SDK_VERSIONS.openai,
     },
   },
   minimal: {
     deps: {
       '@0gfoundation/0g-ts-sdk': SDK_VERSIONS['@0gfoundation/0g-ts-sdk'],
+      '@0glabs/0g-serving-broker': SDK_VERSIONS['@0glabs/0g-serving-broker'],
       viem: SDK_VERSIONS.viem,
+      ethers: SDK_VERSIONS.ethers,
+      openai: SDK_VERSIONS.openai,
     },
   },
 };

@@ -116,11 +116,11 @@ describe('scaffold', () => {
     expect(pkg.dependencies['openai']).toBeDefined();
   });
 
-  it('minimal deps are lighter', async () => {
+  it('minimal has all base deps for health checks', async () => {
     await scaffold(makeOptions({ template: 'minimal' }), testDir);
     const pkg = await fse.readJson(join(testDir, 'package.json'));
     expect(pkg.dependencies['@0gfoundation/0g-ts-sdk']).toBeDefined();
-    expect(pkg.dependencies['@0glabs/0g-serving-broker']).toBeUndefined();
-    expect(pkg.dependencies['openai']).toBeUndefined();
+    expect(pkg.dependencies['@0glabs/0g-serving-broker']).toBeDefined();
+    expect(pkg.dependencies['viem']).toBeDefined();
   });
 });
